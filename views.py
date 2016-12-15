@@ -21,7 +21,17 @@ app.config.from_object('_config')
 db = SQLAlchemy(app)
 
 from models import Task, User
-# helper function
+
+# helper functions
+# helper functions
+
+def open_tasks():
+    return db.session.query(Task).filter_by(
+        status='1').order_by(Task.due_date.asc())
+
+def closed_tasks():
+    return db.session.query(Task).filter_by(
+           status='0').order_by(Task.due_date.asc())
 
 
 def login_required(test):
@@ -36,6 +46,7 @@ def login_required(test):
 # route handlers
 
 @app.route('/logout/')
+@login_required
 def logout():
     session.pop('logged_in', None)
     session.pop('user_id', None)
@@ -55,24 +66,22 @@ def login():
                 flash('Welcome')
                 return redirect(url_for('tasks'))
             else:
-                error = 'invalid username or password'
+                error = 'Invalid username or password'
         else:
             error = 'Both fields are required'
     return render_template('login.html', form=form, error=error)
 
+    def register():
+        pass
 
 @app.route('/tasks/')
 @login_required
 def tasks():
-    open_tasks = db.session.query(Task) \
-        .filter_by(status='1').order_by(Task.due_date.asc())
-    closed_tasks = db.session.query(Task) \
-        .filter_by(status='0').order_by(Task.due_date.asc())
     return render_template(
         'tasks.html',
         form=AddTaskForm(request.form),
-        open_tasks=open_tasks,
-        closed_tasks=closed_tasks
+        open_tasks=open_tasks(),
+        closed_tasks=closed_tasks()
     )
 
 
@@ -92,15 +101,23 @@ def new_task():
                 '1',
                 session['user_id']
             )
-
             db.session.add(new_task)
             db.session.commit()
-
             flash('New entry was succesfully posted. Thanks.')
-
-    return redirect(url_for('tasks'))
+            return redirect(url_for('tasks'))
+        else:
+            return render_template('tasks.html', form=form,
+                                   error=error)
+    return render_template(
+        'tasks.html',
+        form=form,
+        error=error,
+        open_tasks=open_tasks(),
+        closed_tasks=closed_tasks()
+    )
 
 # Mark tasks as complete
+
 @app.route('/complete/<int:task_id>/')
 @login_required
 def complete(task_id):
