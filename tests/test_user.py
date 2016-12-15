@@ -1,9 +1,9 @@
 import os
 import unittest
 
-from views import app, db
-from _config import basedir
-from models import User
+from project import app, db
+from project._config import basedir
+from project.models import Task, User
 
 TEST_DB = 'test.db'
 
@@ -88,7 +88,7 @@ class AllTest(unittest.TestCase):
     def test_welcome_message(self):
         response = self.app.get('/')
         self.assertEqual(response.status_code, 200)
-        self.assertIn('Welcome to FlaskTaskr.', response.data)
+        self.assertIn(b'Welcome to FlaskTaskr.', response.data)
 
     def test_user_cannot_login_unless_registered(self):
         response = self.login('foo', 'bar')
@@ -100,7 +100,7 @@ class AllTest(unittest.TestCase):
                       'python',
                       'python')
         response = self.login('Michael', 'python')
-        self.assertIn('Welcome to FlaskTaskr', response.data)
+        self.assertIn(b'Welcome to FlaskTaskr', response.data)
 
     def test_invalid_form_data(self):
         self.register('Michael', 'michael@realpython.com',
@@ -173,7 +173,7 @@ class AllTest(unittest.TestCase):
         db.session.commit()
 
         users = db.session.query(User).all()
-        print users
+        # print users
         for user in users:
             self.assertEquals(user.role, 'user')
 
@@ -187,7 +187,7 @@ class AllTest(unittest.TestCase):
         self.login('Superman', 'allpowerful')
         response = self.app.get('tasks/', follow_redirects=True)
         self.assertNotIn(
-            'You can only update task that belong to you',
+            b'You can only update task that belong to you',
             response.data
         )
 
@@ -201,5 +201,5 @@ class AllTest(unittest.TestCase):
         self.login('Superman', 'allpowerful')
         self.app.get('tasks/', follow_redirects=True)
         response = self.app.get("delete/1", follow_redirects=True)
-        self.assertNotIn('You can only delete tasks that belong to you',
+        self.assertNotIn(b'You can only delete tasks that belong to you',
                          response.data)
