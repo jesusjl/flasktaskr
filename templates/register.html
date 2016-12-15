@@ -7,11 +7,11 @@
   <p>
     {{ form.name(placeholder="name")}}
     {% if form.name.errors %}
-    <span class="error">
-      {% for error in form.name.errors %}
-      {{ error }}
-      {% endfor %}
-    </span>
+      <span class="error">
+        {% for error in form.name.errors %}
+        {{ error }}
+        {% endfor %}
+      </span>
     {% endif %}
   </p>
   <p>

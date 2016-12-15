@@ -2,6 +2,7 @@
 {% block content %}
 
 <h1>Welcome to FlaskTaskr</h1>
+<br>
 <a href="/logout">Logout</a>
 <div class="add-task">
   <h3>Add a new task:</h3>
@@ -16,7 +17,6 @@
         {% endfor %}
       </span>
       {% endif %}
-
   </p>
   <p>
   {{ form.due_date(placeholder="due_date") }}
@@ -27,20 +27,19 @@
       {% endfor %}
     </span>
     {% endif %}
-
 </p>
 <p>
-{{ form.priority.label }}
-{{ form.priority }}
-  {% if form.priority.errors %}
+  {{ form.priority.label }}
+  {{ form.priority }}
   <span class="error">
-    {% for error in form.priority.errors %}
-      {{ error }}
-    {% endfor %}
+    {% if form.priority.errors %}
+      {% for error in form.priority.errors %}
+        {{ error }}
+      {% endfor %}
+    {% endif %}
   </span>
-  {% endif %}
 </p>
-  <p> <input type="submit" value="Submit"></p>
+  <p> <input class="btn btn-default" type="submit" value="Submit"></p>
   </form>
 </div>
 <div class="entries">
@@ -82,6 +81,8 @@
   <br>
 </div>
 <div class="entries">
+  <br>
+  <br>
   <h2>Closed tasks: </h2>
   <div class="datagrid">
     <table>
