@@ -1,7 +1,7 @@
 # db_create.py
 from datetime import date
 
-from project import db
+from project import db, bcrypt
 from project.models import User, Task
 
 # create the database and the db table
@@ -9,7 +9,8 @@ db.create_all()
 
 # insert data
 db.session.add(
-    User("admin", "admin@admin.com", "admin", "admin")
+    User("admin", "admin@admin.com",
+         bcrypt.generate_password_hash("admin"), "admin")
 )
 
 db.session.add(

@@ -4,6 +4,7 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 DATABASE = 'flasktaskr.db'
 CSRF_ENABLED = True
+DEBUG = False
 # use random key generator instead
 # https://github.com/rjw57/hdcp-genkey
 SECRET_KEY = "my_precious"
