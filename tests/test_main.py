@@ -56,18 +56,18 @@ class MainTests(unittest.TestCase):
         # the users sess on their end
         self.assertIn(b'Sorry. There\'s nothing here.', response.data)
 
-    # def test_500_error(self):
-    #     bad_user = User(
-    #         name='Jeremy',
-    #         email='jeremy@realpython.com',
-    #         password='django'
-    #     )
-    #     db.session.add(bad_user)
-    #     db.session.commit()
-    #     response = self.login('Jeremy', 'django')
-    #     self.assertEquals(response.status_code, 500)
-    #     self.assertNotIn(b'ValueError: Invalid salt', response.data)
-    #     self.assertIn(b'Something went terrible wrong.', response.data)
+    def test_500_error(self):
+        bad_user = User(
+            name='Jeremy',
+            email='jeremy@realpython.com',
+            password='django'
+        )
+        db.session.add(bad_user)
+        db.session.commit()
+        response = self.login('Jeremy', 'django')
+        self.assertEquals(response.status_code, 500)
+        self.assertNotIn(b'ValueError: Invalid salt', response.data)
+        self.assertIn(b'Something went terrible wrong.', response.data)
 
 if __name__ == '__main__':
     unittest.main()

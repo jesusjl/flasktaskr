@@ -4,11 +4,15 @@
 # cd changes the directory on the server side
 # get downloads a file from the remote server
 # prompt prompts a user with text and returns the user input
-from fabric.api import local
+from fabric.api import local, settings, abort
+from fabric.contrib.console import confirm
 
 
 def test():
-    local("nosetests -v")
+    with settings(warn_only=True):
+        result = local("nosetests -v", capture=True)
+    if result.failed and not confirm("Test failed. Continue?"):
+        abort("Aborted at user request")
 
 
 def commit():
