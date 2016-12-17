@@ -1,2 +1,9 @@
 
 404 error at 16-12-2016 11:39:56: http://127.0.0.1:5000/sasasa
+404 error at 17-12-2016 09:21:24: http://0.0.0.0:5000/favicon.ico
+500 error at 17-12-2016 09:27:20: http://0.0.0.0:5000/
+404 error at 17-12-2016 10:12:47: http://localhost/this-route-does-not-exists
+404 error at 17-12-2016 10:14:36: http://localhost/this-route-does-not-exists
+404 error at 17-12-2016 10:21:36: http://localhost/this-route-does-not-exists
+404 error at 17-12-2016 10:22:12: http://localhost/this-route-does-not-exists
+404 error at 17-12-2016 10:28:17: http://localhost/this-route-does-not-exists
