@@ -54,5 +54,7 @@ def deploy():
 # you want to immediately load a prior commit to get it
 # working. You can do this quickly now by
 # running the command: $ fab rollback
+
+
 def rollback():
     local("heroku rollback")
