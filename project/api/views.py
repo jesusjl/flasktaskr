@@ -24,7 +24,7 @@ def login_required(test):
         else:
             flash('You need to login first')
             return redirect(url_for('users.login'))
-        return wrap
+    return wrap
 
 
 def open_tasks():
@@ -36,6 +36,7 @@ def open_tasks():
 ##########
 
 @api_blueprint.route('/api/v1/tasks/')
+@login_required
 def api_tasks():
     results = db.session.query(Task).limit(10).offset(0).all()
     json_result = []
@@ -54,6 +55,7 @@ def api_tasks():
 
 
 @api_blueprint.route('/api/v1/tasks/<int:task_id>')
+@login_required
 def task(task_id):
     result = db.session.query(Task).filter_by(task_id=task_id).first()
     if result:
