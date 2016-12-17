@@ -1,16 +1,17 @@
-# specify language
 language:
 - python
-# specify python version
 python:
-- "3.5.2"
-- "3.4"
-- "2.7"
-
-# install dependencies
+- 3.5.2
+- '3.4'
+- '2.7'
 install:
 - pip install -r requirements.txt
-
-# run tests
 script:
 - nosetests
+deploy:
+  provider: heroku
+  api_key:
+    secure: PdD9e8EcQ+OMO0aCDyVMd9ZzyDiSheYmbjsJ2BTEKvjvN9xwpiD6XHE5Z9od0xbTkZcezAfxS8uGw08X1BobdBcUOPvyEj+SqVw0YjlHmZVHlbT0etzb0qKjFrJB5Unv3yNFzbyBmNU6SP08KgnJ2+cri+UDVod3BaWXUm2jm/v28q1wV4ZDkQ3AQ8pTaSJYaYcjRWL+0oaay1jE9zvut2Y1DBV7Uhl24VDCnyCOawyqoYUVhk4z6UYrBxTbJSqOK7obV5B1Vo2OJUU2NqldHwQPqKdFbECPfF4ahluUdf9S7sesGN0alawL6cAZMATEkNHndVBjBMy31eV5iEEYLz/BpJLYeSO/vVNFFsvFcnZw4VWeugMW0iyZmfZCiQt13+DgsBfz+tbfrQ3bsfkhEiiGgTNkeB4Daqa0ObXty2m3T3XJBjxSl+CnXvMFTWx336u/W0UmbLef+NTW/LKKllcEw9JYV8SBHvBi3dIlDOZAXwNOj1jardVgM3HqBJ3DnXvMf1dLJaT+Ce9b0pRpOgMP9t6nJn1DtgjZ8ALXtXz1aPE8Zk2OekFeP0eJ/Kr8W78WNqnmYvSWWJycKPIJnQq5HAS5NLeX7IRNWDF9gtbIsoS483uH5UJV7AHZrqkjpKGKJ3SJ0HQ46Hfwo6uB547qrJYTuzVsdw2sMkwQ3YY=
+  app: limitless-gorge-24264
+  on:
+    repo: jesusjl/flasktaskr
