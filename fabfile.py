@@ -28,3 +28,31 @@ def prepare():
     test()
     commit()
     push()
+
+# deploy
+
+
+def pull():
+    local("git pull origin master")
+
+
+def heroku():
+    local("git push heroku master")
+
+
+def heroku_test():
+    local("heroku run nosetests -v")
+
+
+def deploy():
+    test()
+    heroku()
+    heroku_test()
+
+# rollback
+# If you do run into an error on Heroku,
+# you want to immediately load a prior commit to get it
+# working. You can do this quickly now by
+# running the command: $ fab rollback
+def rollback():
+    local("heroku rollback")
