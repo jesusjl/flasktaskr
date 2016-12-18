@@ -16,13 +16,13 @@ def test():
 
 
 def commit():
-    message = input("Enter a git commit message")
+    message = input("Enter a git commit message: ")
     local("git add . && git commit -am '{}'".format(message))
 
 
 def push():
     local("git branch")
-    branch = raw_input("Which branch do you want to push to? ")
+    branch = input("Which branch do you want to push to? ")
     local("git push origin {}".format(branch))
 
 
