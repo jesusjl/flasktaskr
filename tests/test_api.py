@@ -58,11 +58,26 @@ class APITest(unittest.TestCase):
         )
         db.session.commit()
 
+    def login(self, name, password):
+        return self.app.post('/', data=dict(
+            name=name, password=password), follow_redirects=True)
+
+    def register(self, name, email, password, confirm):
+        return self.app.post(
+            'register/',
+            data=dict(name=name, email=email, password=password,
+                      confirm=confirm),
+            follow_redirects=True
+        )
+
     #########
     # tests #
     #########
 
     def test_collection_endpoint_returns_correct(self):
+        self.register('Michael', 'michael@realpython.com',
+                      'python', 'python')
+        self.login('Michael', 'python')
         self.add_tasks()
         response = self.app.get('api/v1/tasks/',
                                 follow_redirects=True)
@@ -72,6 +87,9 @@ class APITest(unittest.TestCase):
         self.assertIn(b'Purchase Real Python', response.data)
 
     def test_resource_endpoint_returns_correct_data(self):
+        self.register('Michael', 'michael@realpython.com',
+                      'python', 'python')
+        self.login('Michael', 'python')
         self.add_tasks()
         response = self.app.get('api/v1/tasks/2', follow_redirects=True)
         self.assertEquals(response.status_code, 200)
@@ -79,13 +97,15 @@ class APITest(unittest.TestCase):
         self.assertIn(b'Purchase Real Python', response.data)
         self.assertNotIn(b'Run around in circles', response.data)
 
-
     def test_invalid_resource_endpoint_returns_error(self):
+        self.register('Michael', 'michael@realpython.com',
+                      'python', 'python')
+        self.login('Michael', 'python')
         self.add_tasks()
         response = self.app.get('api/v1/tasks/209', follow_redirects=True)
         self.assertEquals(response.status_code, 404)
         self.assertEquals(response.mimetype, 'application/json')
-        self.assertIn(b'Element does not exist', response.data)
+        self.assertIn(b'Element does not exists', response.data)
 
 if __name__ == "__main__":
     unittest.main()
